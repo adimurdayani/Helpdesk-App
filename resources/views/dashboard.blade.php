@@ -1,17 +1,26 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout>
+{{-- Customize layout sections --}}
+
+@section('subtitle', 'Welcome')
+@section('content_header_title', 'Beranda')
+@section('content_header_subtitle', 'Dashboard')
+
+{{-- Content body: main page content --}}
+
+@section('content_body')
+    <p>Welcome to this beautiful admin panel.</p>
+@stop
+
+{{-- Push extra CSS --}}
+
+@push('css')
+    {{-- Add here extra stylesheets --}}
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+@endpush
+
+{{-- Push extra scripts --}}
+
+@push('js')
+    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+@endpush

@@ -1,53 +1,81 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {{ __('OPD') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="overflow-x-auto">
-                        <table class="w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-700">
+{{-- Customize layout sections --}}
+
+@section('subtitle', 'OPD')
+@section('content_header_title', 'Dashboard')
+@section('content_header_subtitle', 'Perangkat Daerah')
+
+{{-- Content body: main page content --}}
+
+@section('content_body')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ route('opd.create') }}" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> Tambah Data
+                    </a>
+                </div>
+                <div class="card-body">
+
+                    @if (session('success'))
+                        <div class="mb-3 alert alert-success" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <div class="table-responsive">
+                        <table class="table table-hover nowrap w-100">
+                            <thead>
                                 <tr>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">
-                                        No
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">
-                                        Nama
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">
-                                        Email
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-300">
-                                        Status
-                                    </th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium text-center text-gray-500 uppercase dark:text-gray-300">
-                                        Aksi
-                                    </th>
+                                    <th>No.</th>
+                                    <th>Kode OPD</th>
+                                    <th>Nama</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <tr class="transition hover:bg-gray-50 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 text-gray-700 dark:text-gray-200">1</td>
-                                    <td class="px-6 py-4 text-gray-700 dark:text-gray-200">Adi Murdayani</td>
-                                    <td class="px-6 py-4 text-gray-700 dark:text-gray-200">adi@email.com</td>
-                                    <td class="px-6 py-4">Aktif</td>
-                                    <td class="px-6 py-4 text-center">Edit</td>
-                                </tr>
+                            <tbody>
+                                @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->kode_opd }}</td>
+                                        <td>{{ $item->nama_opd }}</td>
+                                        <td>{{ $item->is_active }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="" class="btn btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@stop
+
+{{-- Push extra CSS --}}
+
+@push('css')
+    {{-- Add here extra stylesheets --}}
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+@endpush
+
+{{-- Push extra scripts --}}
+
+@push('js')
+    <script>
+        console.log("Hi, I'm using the Laravel-AdminLTE package!");
+    </script>
+@endpush
