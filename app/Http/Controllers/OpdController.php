@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Instansi;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class OpdController extends Controller
 {
@@ -26,7 +27,8 @@ class OpdController extends Controller
                     'required',
                     'string',
                     'max:255',
-                    'unique:opd,kode_opd'
+                    'unique:opd,kode_opd',
+                    //Rule::unique(Permission::class, 'kode_opd')//pilihan
                 ],
                 'nama_opd' => ['required', 'string', 'max:255'],
                 'is_active' => ['required', 'boolean']
