@@ -18,6 +18,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    // User
+    Route::get('user', [\App\Http\Controllers\UserController::class, 'index'])->name('user');
+    Route::get('user/create', [\App\Http\Controllers\UserController::class, 'create'])->name('user.create');
+    Route::post('user/store', [\App\Http\Controllers\UserController::class, 'store'])->name('user.store');
+    Route::get('user/edit/{user}', [\App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
+    Route::delete('user/{user}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
+
+    // OPD
     Route::get('/opd', [\App\Http\Controllers\OpdController::class, 'index'])->name('opd');
     Route::get('/opd/create', [\App\Http\Controllers\OpdController::class, 'create'])->name('opd.create');
     Route::post('/opd/store', [\App\Http\Controllers\OpdController::class, 'store'])->name('opd.store');
