@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('user-create', compact('user'));
+        return view('user-edit', compact('user'));
     }
 
     public function store(Request $request)
@@ -41,9 +41,34 @@ class UserController extends Controller
         return redirect()->route('user')->with('success', 'Data berhasil disimpan');
     }
 
+    public function update(User $user, Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6|confirmed',
+            'password_confirmation' => 'nullable|min:6',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+
+        $user->save();
+
+        return redirect()
+            ->route('user')
+            ->with('success', 'Data berhasil diperbarui');
+    }
+
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('user')->with('success', 'Data berhasil dihapus');
+        return redirect()
+            ->route('user')
+            ->with('success', 'Data berhasil dihapus');
     }
 }

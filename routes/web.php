@@ -19,10 +19,22 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // User
+    // fungsi untuk menampilkan halaman user
     Route::get('user', [\App\Http\Controllers\UserController::class, 'index'])->name('user');
+
+    // fungsi untuk menampilkan halaman tambah user
     Route::get('user/create', [\App\Http\Controllers\UserController::class, 'create'])->name('user.create');
+
+    // fungsi untuk menyimpan data user baru
     Route::post('user/store', [\App\Http\Controllers\UserController::class, 'store'])->name('user.store');
+
+    // fungsi untuk menampilkan halaman edit user
     Route::get('user/edit/{user}', [\App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
+
+    // fungsi untuk memperbarui data user
+    Route::put('user/update/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('user.update');
+
+    // fungsi untuk menghapus data user
     Route::delete('user/{user}', [\App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 
     // OPD
