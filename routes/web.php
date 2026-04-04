@@ -47,6 +47,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/permission', [\App\Http\Controllers\PermissionController::class, 'index'])->name('permission');
     Route::get('/role', [\App\Http\Controllers\RoleController::class, 'index'])->name('role');
+    Route::get('/role/create', [\App\Http\Controllers\RoleController::class, 'create'])->name('role.create');
+    Route::post('/role/store', [\App\Http\Controllers\RoleController::class, 'store'])->name('role.store');
+    Route::get('/role/edit/{role}', [\App\Http\Controllers\RoleController::class, 'edit'])->name('role.edit');
+    Route::delete('/role/delete/{role}', [\App\Http\Controllers\RoleController::class, 'destroy'])->name('role.destroy');
 });
 
 require __DIR__ . '/auth.php';
