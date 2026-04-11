@@ -28,7 +28,7 @@ class RoleController extends Controller
 
         Role::create([
             'name' => $request->name,
-            'guar_name' => $request->uard_name,
+            'guard_name' => $request->guard_name,
         ]);
 
         return redirect()
@@ -36,9 +36,34 @@ class RoleController extends Controller
         ->with('succes', 'data berhasil di simpan');
     }
 
-    public function edit(Role $role)
+    public function edit(role $role)
     {
-        return view('role-edit',compact('$role'));
+        return view('role-edit',compact('role'));
+    }
+
+   public function update(Request $request, Role $role)
+    {
+        $request->validate([
+            'guard_name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:roles,name,' . $role->id
+            ],
+        ]);
+
+        $role->update([
+            'guard_name' => $request->guard_name,
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('role')
+            ->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy(Role $role)

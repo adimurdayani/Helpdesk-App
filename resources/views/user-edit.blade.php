@@ -43,6 +43,18 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role[]" id="role" multiple='multiple' class="form-control">
+                                <option value="">Pilih</option>
+                                @foreach ($role as $item)
+                                    <option {{ $user->roles->contains('id', $item->id) ? 'selected' : '' }}
+                                        value="{{ $item->id }}">
+                                        {{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

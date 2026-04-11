@@ -1,19 +1,15 @@
 @extends('layouts.app')
 
-{{-- Customize layout sections --}}
-
 @section('subtitle', 'Permission')
 @section('content_header_title', 'Beranda')
 @section('content_header_subtitle', 'Permission')
-
-{{-- Content body: main page content --}}
 
 @section('content_body')
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="" class="btn btn-primary">
+                    <a href="{{ route('permission.create') }}" class="btn btn-primary">
                         <i class="fa fa-plus"></i> Tambah Data
                     </a>
                 </div>
@@ -36,23 +32,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
+                                @forelse ($permission as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->guard }}</td>
+                                        <td>{{ $item->guard_name }}</td> {{-- ← fix --}}
                                         <td>
                                             <div class="btn-group">
-                                                <a href="" class="btn btn-warning">
+                                                <a href="{{ route('permission.edit', $item->id) }}" class="btn btn-warning">
+                                                    {{-- ← fix --}}
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <button type="button" class="btn btn-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
+                                                <form action="{{ route('permission.destroy', $item->id) }}" method="POST"
+                                                    style="display:inline"> {{-- ← fix --}}
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Yakin ingin menghapus?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">Tidak ada data</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -63,14 +70,8 @@
     </div>
 @stop
 
-{{-- Push extra CSS --}}
-
 @push('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
 @endpush
-
-{{-- Push extra scripts --}}
 
 @push('js')
     <script>

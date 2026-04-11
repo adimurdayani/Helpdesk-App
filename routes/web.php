@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Routing\Attribute\Route as AttributeRoute;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
+    // EMAIL REQUEST
+    Route::get('email-request', [\App\Http\Controllers\EmailRequestController::class, 'index'])->name('email-request');
+
+
+
+
     // User
     // fungsi untuk menampilkan halaman user
     Route::get('user', [\App\Http\Controllers\UserController::class, 'index'])->name('user');
@@ -45,12 +53,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/opd/update/{instansi}', [\App\Http\Controllers\OpdController::class, 'update'])->name('opd.update');
     Route::delete('/opd/{instansi}', [\App\Http\Controllers\OpdController::class, 'destroy'])->name('opd.destroy');
 
-    Route::get('/permission', [\App\Http\Controllers\PermissionController::class, 'index'])->name('permission');
+    //role
     Route::get('/role', [\App\Http\Controllers\RoleController::class, 'index'])->name('role');
     Route::get('/role/create', [\App\Http\Controllers\RoleController::class, 'create'])->name('role.create');
     Route::post('/role/store', [\App\Http\Controllers\RoleController::class, 'store'])->name('role.store');
     Route::get('/role/edit/{role}', [\App\Http\Controllers\RoleController::class, 'edit'])->name('role.edit');
+    Route::put('/role/update/{role}', [\App\Http\Controllers\RoleController::class, 'update'])->name('role.update');
     Route::delete('/role/delete/{role}', [\App\Http\Controllers\RoleController::class, 'destroy'])->name('role.destroy');
+
+    //permission
+    Route::get('/permission', [\App\Http\Controllers\PermissionController::class, 'index'])->name('permission');
+    Route::get('/permission', [\App\Http\Controllers\PermissionController::class, 'index'])->name('permission');
+    Route::get('/permission/create',[\App\Http\Controllers\PermissionController::class,'create'])->name('permission.create');
+    Route::post('/permission/store',[\App\Http\Controllers\PermissionController::class,'store'])->name('permission.store');
+    Route::get('/permission/edit/{permission}',[\App\Http\Controllers\PermissionController::class,'edit'])->name('permission.edit');
+    Route::put('/permission/update/{permission}',[\App\Http\Controllers\PermissionController::class,'update'])->name('permission.update');
+    Route::delete('/permission/delete/{permission}',[\App\Http\Controllers\PermissionController::class,'destroy'])->name('permission.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -327,6 +327,11 @@ return [
         ],
         ['header' => 'Aplikasi'],
         [
+            'text'=>'Email Request',
+            'icon' => 'fas fa fa-envelope',
+            'url' => 'email-request',
+        ],
+        [
             'text' => 'Referensi Data',
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [
