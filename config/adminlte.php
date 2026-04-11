@@ -327,6 +327,11 @@ return [
         ],
         ['header' => 'Aplikasi'],
         [
+            'text' => 'Email request',
+            'url' => 'dashboard',
+            'icon' => 'far fa fa-tachometer-alt',
+        ],
+        [
             'text' => 'Referensi Data',
             'icon' => 'fas fa-fw fa-user',
             'submenu' => [

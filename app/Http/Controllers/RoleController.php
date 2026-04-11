@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Exceptions\RoleDoesNotExist;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -19,50 +19,58 @@ class RoleController extends Controller
         return view('role-create');
     }
 
-    public function store(Request $request)
+    public function store(request $request)
     {
         $request->validate([
-            'name'       => ['required', 'string', 'max:255'],
-            'guard_name' => ['required', 'string', 'max:255'],
+            'name'=>['required', 'string', 'max:255'],
+            'guard_name'=>['required', 'string', 'max:255'],
         ]);
 
         Role::create([
-            'name'       => $request->name,
+            'name' => $request->name,
             'guard_name' => $request->guard_name,
         ]);
 
         return redirect()
-            ->route('role')
-            ->with('success', 'Data berhasil disimpan');
+        ->route('role')
+        ->with('succes', 'data berhasil di simpan');
     }
 
-    public function edit(Role $role)
+    public function edit(role $role)
     {
-        return view('role-edit', compact('role'));
+        return view('role-edit',compact('role'));
     }
 
-    public function update(Request $request, Role $role)
+   public function update(Request $request, Role $role)
     {
         $request->validate([
-            'name'       => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id],
-            'guard_name' => ['required', 'string', 'max:255'],
+            'guard_name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:roles,name,' . $role->id
+            ],
         ]);
 
         $role->update([
-            'name'       => $request->name,
             'guard_name' => $request->guard_name,
+            'name' => $request->name,
         ]);
 
-        return redirect()
-            ->route('role')
+        return redirect()->route('role')
             ->with('success', 'Data berhasil diupdate');
     }
 
-   public function destroy(Role $role)
+    public function destroy(Role $role)
     {
         $role->delete();
         return redirect()
-            ->route('role')
-            ->with('success', 'Data berhasil dihapus');
+           ->route('role')
+           ->with('succes', 'data berhasil diapus');
     }
 }

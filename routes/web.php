@@ -18,6 +18,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
+    // Email Request
+    Route::get('email-request', [\App\Http\Controllers\EmailRequestController::class, 'index'])->name('email-request');
+
+
+
     // User
     // fungsi untuk menampilkan halaman user
     Route::get('user', [\App\Http\Controllers\UserController::class, 'index'])->name('user');

@@ -33,19 +33,30 @@ protected $fillable = [
         'tanggal_selesai' => 'datetime',
     ];
 
+    // Pemohon
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function instansi()
+    // OPD
+    public function opd()
     {
-        return $this->belongsTo(Instansi::class, 'opd_id', 'id');
+        return $this->belongsTo(Instansi::class);
     }
 
+    // Admin yang memproses
     public function diprosesOleh()
     {
         return $this->belongsTo(User::class, 'diproses_oleh');
+    }
+
+    // Membuat penomoran otomatis
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->nomor_tiket = 'HELP-' . now()->format('YmdHis');
+        });
     }
 
 }
