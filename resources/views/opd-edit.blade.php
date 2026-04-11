@@ -34,8 +34,8 @@
                         <div class="form-group">
                             <label for="nama_opd">Nama OPD</label>
                             <input type="text" name="nama_opd" id="nama_opd" value="{{ $instansi->nama_opd }}"
-                                class="form-control @error('nama_opd') is-invalid @enderror" value="{{ old('nama_opd') }}"
-                                placeholder="Masukkan kode OPD">
+                                class="form-control @error('nama_opd') is-invalid @enderror"
+                                value="{{ old('nama_opd') ?? $instansi->nama_opd }}" placeholder="Masukkan kode OPD">
                             @error('nama_opd')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

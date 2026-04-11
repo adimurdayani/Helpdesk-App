@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="" class="btn btn-primary">
+                    <a href="{{ route('permission.create') }}" class="btn btn-primary">
                         <i class="fa fa-plus"></i> Tambah Data
                     </a>
                 </div>
@@ -25,37 +25,31 @@
                         </div>
                     @endif
 
-                    <div class="table-responsive">
-                        <table class="table table-hover nowrap w-100">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nama</th>
-                                    <th>Guard</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ $item->guard }}</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <a href="" class="btn btn-warning">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <button type="button" class="btn btn-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    <x-adminlte-datatable id="role-table" :heads="['NO.', 'Nama', 'Guard', 'Aksi']" :config="['paging' => true]">
+                        @foreach ($data as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->guard_name }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ route('permission.edit', $item->id) }}" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('permission.destroy', $item->id) }}" method="post"
+                                            class="inline-flex">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" onclick="confirm('Apakah anda yakin?')"
+                                                class="btn btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </x-adminlte-datatable>
 
                 </div>
             </div>
@@ -72,6 +66,7 @@
 
 {{-- Push extra scripts --}}
 
+@section('plugins.Datatables', true)
 @push('js')
     <script>
         console.log("Hi, I'm using the Laravel-AdminLTE package!");
