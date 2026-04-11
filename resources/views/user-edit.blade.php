@@ -18,7 +18,7 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('user.update',$user->id) }}" method="post">
+                    <form action="{{ route('user.update', $user->id) }}" method="post">
                         @csrf
                         @method('put')
                         <div class="form-group">
@@ -26,7 +26,7 @@
                             <input type="text" name="name" id="name"
                                 class="form-control @error('name')
                                 is-invalid @enderror"
-                                value="{{ old('name')??$user->name }}" placeholder="Masukkan nama lengkap">
+                                value="{{ old('name') ?? $user->name }}" placeholder="Masukkan nama lengkap">
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -42,6 +42,19 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role[]" id="role" multiple='multiple' class="form-control">
+                                <option value="">Pilih</option>
+                                @foreach ($role as $item)
+                                    <option {{ $user->roles->contains('id', $item->id) ? 'selected' : '' }}
+                                        value="{{ $item->id }}">
+                                        {{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
 
                         <div class="row">
                             <div class="col-md-6">
@@ -59,8 +72,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password_confirmation">Konfirmasi Kata sandi</label>
-                                    <input type="password" name="password_confirmation"
-                                    id="password_confirmation"
+                                    <input type="password" name="password_confirmation" id="password_confirmation"
                                         class="form-control @error('password_confirmation')
                                         is-invalid @enderror"
                                         placeholder="Masukkan konfirmasi kata sandi">

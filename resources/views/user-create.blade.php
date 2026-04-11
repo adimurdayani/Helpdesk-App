@@ -42,36 +42,44 @@
                             @enderror
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="password">Kata sandi</label>
-                                    <input type="password" name="password" id="password"
-                                        class="form-control @error('password')
-                                        is-invalid @enderror"
-                                        placeholder="Masukkan kata sandi">
-                                    @error('password')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="password_confirmation">Konfirmasi Kata sandi</label>
-                                    <input type="password" name="password_confirmation"
-                                    id="password_confirmation"
-                                        class="form-control @error('password_confirmation')
-                                        is-invalid @enderror"
-                                        placeholder="Masukkan konfirmasi kata sandi">
-                                    @error('password_confirmation')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
+                        <div class="form-group">
+                            <label for="role">Role</label>
+                            <select name="role[]" id="role" multiple='multiple' class="form-control">
+                                <option value="">Pilih</option>
+                                @foreach ($role as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
 
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-                        <button type="reset" class="btn btn-danger"><i class="fa fa-close"></i> Reset</button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password">Kata sandi</label>
+                                        <input type="password" name="password" id="password"
+                                            class="form-control @error('password')
+                                        is-invalid @enderror"
+                                            placeholder="Masukkan kata sandi">
+                                        @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password_confirmation">Konfirmasi Kata sandi</label>
+                                        <input type="password" name="password_confirmation" id="password_confirmation"
+                                            class="form-control @error('password_confirmation')
+                                        is-invalid @enderror"
+                                            placeholder="Masukkan konfirmasi kata sandi">
+                                        @error('password_confirmation')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                            <button type="reset" class="btn btn-danger"><i class="fa fa-close"></i> Reset</button>
                     </form>
                 </div>
             </div>

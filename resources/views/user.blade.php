@@ -25,11 +25,16 @@
                         </div>
                     @endif
 
-                    <x-adminlte-datatable id="user-table" :heads="['NO.', 'Nama', 'Email', 'Aksi']" :config="['paging' => true]">
+                    <x-adminlte-datatable id="user-table" :heads="['NO.', 'Nama', 'Level Akses', 'Email', 'Aksi']" :config="['paging' => true]">
                         @foreach ($users as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
+                                <td>
+                                    @foreach ($item->roles as $role)
+                                        <span class="badge bg-success">{{ $role->name }}</span>
+                                    @endforeach
+                                </td>
                                 <td>{{ $item->email }}</td>
                                 <td>
                                     <div class="btn-group">
