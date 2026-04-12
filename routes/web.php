@@ -22,6 +22,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Email Request
     Route::get('email-request', [\App\Http\Controllers\EmailRequestController::class, 'index'])
         ->name('email-request');
+    Route::get('email-request/create', [\App\Http\Controllers\EmailRequestController::class, 'create'])
+        ->name('email-request.create');
+    Route::post('email-request/store', [\App\Http\Controllers\EmailRequestController::class, 'store'])
+        ->name('email-request.store');
+    Route::get('email-request/edit/{emailRequest}', [\App\Http\Controllers\EmailRequestController::class, 'edit'])
+        ->name('email-request.edit');
+    Route::put('email-request/update/{emailRequest}', [\App\Http\Controllers\EmailRequestController::class, 'update'])
+        ->name('email-request.update');
+    Route::get('email-request/show/{emailRequest}', [\App\Http\Controllers\EmailRequestController::class, 'show'])
+        ->name('email-request.show');
+    Route::get('email-request/verifikasi/{emailRequest}', [\App\Http\Controllers\EmailRequestController::class, 'verifikasi'])
+        ->name('email-request.verifikasi');
+    Route::put('email-request/{emailRequest}/update-status', [\App\Http\Controllers\EmailRequestController::class, 'updateStatus'])
+        ->name('email-request.updateStatus');
+    Route::delete('email-request/{emailRequest}', [\App\Http\Controllers\EmailRequestController::class, 'destroy'])
+        ->name('email-request.destroy');
 
     // User
     // fungsi untuk menampilkan halaman user
