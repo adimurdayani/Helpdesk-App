@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailRequest;
+use App\Models\Instansi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -11,19 +12,20 @@ class EmailRequestController extends Controller
 {
     public function index()
     {
-        $emailRequest = EmailRequest::all();
-        return view('email-request', compact('emailRequest'));
+        $emailRequests  = EmailRequest::all();
+        return view('email-request', compact('emailRequests'));
     }
 
     public function create()
     {
-        return view('email-request-create');
+        $opd = Instansi::all();
+        return view('email-request-create', compact('opd'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'opd_id' => 'required|exists:opds,id',
+            'opd_id' => 'required|exists:opd,id',
             'nama_lengkap' => 'required|string|max:255',
             'nip' => 'required|string|max:50',
             'jabatan' => 'required|string|max:255',
@@ -55,13 +57,14 @@ class EmailRequestController extends Controller
 
     public function edit(EmailRequest $emailRequest)
     {
-        return view('email-request-edit', compact('emailRequest'));
+        $opd = Instansi::all();
+        return view('email-request-edit', compact('emailRequest', 'opd'));
     }
 
     public function update(Request $request, EmailRequest $emailRequest)
     {
         $validated = $request->validate([
-            'opd_id' => 'required|exists:opds,id',
+            'opd_id' => 'required|exists:opd,id',
             'nama_lengkap' => 'required|string|max:255',
             'nip' => 'required|string|max:50',
             'jabatan' => 'required|string|max:255',
@@ -71,7 +74,6 @@ class EmailRequestController extends Controller
             'domain' => 'required|string|max:100',
             'alasan_permohonan' => 'required',
             'surat_permohonan' => 'nullable|file|mimes:pdf|max:2048',
-            'status' => 'required|in:draft,diajukan,diverifikasi,ditolak,disetujui,selesai',
         ]);
 
         DB::transaction(function () use ($request, $validated, $emailRequest) {
@@ -84,20 +86,39 @@ class EmailRequestController extends Controller
                 $validated['surat_permohonan'] = $filePath;
             }
 
-            // Tambahan logic jika status berubah
-            if ($validated['status'] === 'diverifikasi') {
-                $validated['tanggal_verifikasi'] = now();
-                $validated['diproses_oleh'] = auth()->id();
-            }
-
-            if ($validated['status'] === 'selesai') {
-                $validated['tanggal_selesai'] = now();
-            }
-
             $emailRequest->update($validated);
         });
 
         return redirect()->back()->with('success', 'Data berhasil diperbarui');
+    }
+
+    public function verifikasi(EmailRequest $emailRequest)
+    {
+        return view('email-request-verifikasi', compact('emailRequest'));
+    }
+
+    public function updateStatus(EmailRequest $emailRequest, Request $request)
+    {
+        $validated = $request->validate([
+            'catatan_admin' => 'nullable',
+            'status' => 'required|in:draft,diajukan,diverifikasi,ditolak,disetujui,selesai',
+        ]);
+        // Tambahan logic jika status berubah
+        if ($validated['status'] === 'diverifikasi') {
+            $validated['tanggal_verifikasi'] = now();
+            $validated['diproses_oleh'] = auth()->id();
+        }
+
+        if ($validated['status'] === 'selesai') {
+            $validated['tanggal_selesai'] = now();
+        }
+        $emailRequest->update($validated);
+        return redirect()->back()->with('success', 'Data berhasil diperbaharui');
+    }
+
+    public function show(EmailRequest $emailRequest)
+    {
+        return view('email-request-detail', compact('emailRequest'));
     }
 
     public function destroy(EmailRequest $emailRequest)
