@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class EmailRequest extends Model
 {
     use HasFactory;
-protected $fillable = [
+
+    protected $fillable = [
         'nomor_tiket',
         'user_id',
         'opd_id',
@@ -33,16 +34,16 @@ protected $fillable = [
         'tanggal_selesai' => 'datetime',
     ];
 
-    // Pemohon
+    // Relasi ke user
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    // OPD
+    // Relasi ke instansi
     public function opd()
     {
-        return $this->belongsTo(Instansi::class);
+        return $this->belongsTo(Instansi::class, 'opd_id');
     }
 
     // Admin yang memproses
@@ -51,12 +52,11 @@ protected $fillable = [
         return $this->belongsTo(User::class, 'diproses_oleh');
     }
 
-    // Membuat penomoran otomatis
+    // Generate Tiket
     protected static function booted()
     {
         static::creating(function ($model) {
-            $model->nomor_tiket = 'HELP-' . now()->format('YmdHis');
+            $model->nomor_tiket = 'REQ-' . now()->format('YmdHis');
         });
     }
-
 }

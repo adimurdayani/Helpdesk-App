@@ -316,20 +316,25 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-        [
             'text' => 'dashboard',
             'url' => 'dashboard',
             'icon' => 'far fa fa-tachometer-alt',
         ],
         ['header' => 'Aplikasi'],
         [
-            'text' => 'Email request',
-            'url' => 'dashboard',
-            'icon' => 'far fa fa-tachometer-alt',
+            'text' => 'Lacak Tiket',
+            'icon' => 'far fa fa-search',
+            'url' => 'email-request/lacak'
+        ],
+        [
+            'text' => 'Ajukan Email',
+            'icon' => 'far fa fa-plus',
+            'url' => 'email-request/create'
+        ],
+        [
+            'text' => 'Email Request',
+            'icon' => 'far fa fa-envelope',
+            'url' => 'email-request'
         ],
         [
             'text' => 'Referensi Data',
