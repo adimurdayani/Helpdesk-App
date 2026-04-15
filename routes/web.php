@@ -19,6 +19,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    // Lacak Tiket
+    Route::get('email-request/lacak', [App\Http\Controllers\LacakController::class, 'index'])->name('lacak');
     // Email Request
     Route::get('email-request', [\App\Http\Controllers\EmailRequestController::class, 'index'])
         ->name('email-request');

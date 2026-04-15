@@ -70,7 +70,7 @@
                                 </td>
                                 <td>{{ $item->created_at->format('d M Y') }}</td>
                                 <td class="text-center d-flex justify-content-between">
-                                    @if ($item->status !== 'diverifikasi')
+                                    @if ($item->status !== 'diverifikasi' && $item->status !== 'selesai')
                                         <a href="{{ route('email-request.edit', $item->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
                                     @endif
