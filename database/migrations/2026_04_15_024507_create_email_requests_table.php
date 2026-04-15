@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_request', function (Blueprint $table) {
+        Schema::create('email_requests', function (Blueprint $table) {
             $table->id();
 
             $table->string('nomor_tiket')->unique();
@@ -66,6 +66,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('email_request');
+        Schema::dropIfExists('email_requests');
     }
 };
