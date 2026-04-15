@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('opd_id')->constrained('opd')->cascadeOnDelete();
 
-            // Data pemohonan
+            // Data pemohon
             $table->string('nama_lengkap');
             $table->string('nip');
             $table->string('jabatan');
