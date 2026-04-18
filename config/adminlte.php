@@ -339,6 +339,7 @@ return [
         [
             'text' => 'Referensi Data',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'referensi-data',
             'submenu' => [
                 [
                     'text' => 'OPD',
@@ -346,10 +347,11 @@ return [
                 ],
             ]
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'account_settings', 'can' => 'account_setting'],
         [
             'text' => 'User Manajemen',
             'icon' => 'fas fa-fw fa-cogs',
+            'can' => 'user-view',
             'submenu' => [
                 [
                     'text' => 'Pengguna',
@@ -364,16 +366,6 @@ return [
                     'url' => 'role',
                 ],
             ]
-        ],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
         ],
     ],
 
