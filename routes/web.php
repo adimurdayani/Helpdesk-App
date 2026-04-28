@@ -19,6 +19,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    //lacak tiket
+    Route::get('email-request/lacak', [App\Http\Controllers\LacakController::class, 'index'])->name('lacak');
     // Email Request
     Route::get('email-request', [\App\Http\Controllers\EmailRequestController::class, 'index'])
         ->name('email-request');
@@ -38,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('email-request.updateStatus');
     Route::delete('email-request/{emailRequest}', [\App\Http\Controllers\EmailRequestController::class, 'destroy'])
         ->name('email-request.destroy');
+
 
     // User
     // fungsi untuk menampilkan halaman user

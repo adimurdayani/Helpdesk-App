@@ -15,7 +15,6 @@ class EmailRequestController extends Controller
         $emailRequests  = EmailRequest::all();
         return view('email-request', compact('emailRequests'));
     }
-
     public function create()
     {
         $opd = Instansi::all();
@@ -54,6 +53,8 @@ class EmailRequestController extends Controller
 
         return redirect()->back()->with('success', 'Permintaan berhasil diajukan');
     }
+
+
 
     public function edit(EmailRequest $emailRequest)
     {
